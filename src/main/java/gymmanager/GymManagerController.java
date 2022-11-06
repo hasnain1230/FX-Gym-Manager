@@ -61,7 +61,7 @@ public class GymManagerController {
     }
 
     @FXML
-    protected void addMember(ActionEvent event) {
+    protected void addMember() {
         if (checkAddInputs()) {
             Member member;
             String firstName = this.firstNameTextField.getText().trim();
@@ -72,10 +72,10 @@ public class GymManagerController {
             if (location == null) {
                 outputTextArea.appendText("Invalid Location\n");
                 return;
-            } else if (dob.isValid()) {
+            } else if (!dob.isValid()) {
                 outputTextArea.appendText(String.format("DOB %s: invalid calendar date!\n", dob));
                 return;
-            } else if (dob.checkMemberAge()) {
+            } else if (!dob.checkMemberAge()) {
                 outputTextArea.appendText(String.format("DOB %s: must be 18 or older to join!\n", dob));
                 return;
             }
@@ -86,18 +86,41 @@ public class GymManagerController {
             if (this.standardMembershipRadioButton.isSelected()) {
                 member = new Member(firstName, lastName, dob, new Date(), location);
                 memberDatabase.add(member);
-                this.outputTextArea.appendText("Added Standard Member\n");
+                String outputString = String.format("Added %s %s - %s as a Standard member to the database.\n", member.getFname(), member.getLname(), dob);
+                this.outputTextArea.appendText(outputString);
             } else if (this.familyMembershipRadioButton.isSelected()) {
                 member = new Family(firstName, lastName, dob, new Date(), location, Constants.FAMILY_GUEST_PASSES);
                 memberDatabase.add(member);
-                this.outputTextArea.appendText("Added Standard Member\n");
+                String outputString = String.format("Added %s %s - %s as a Family member to the database.\n", member.getFname(), member.getLname(), dob);
+                this.outputTextArea.appendText(outputString);
             } else if (this.premiumMembershipRadioButton.isSelected()) {
                 member = new Premium(firstName, lastName, dob, new Date(), location, Constants.PREMIUM_GUEST_PASS);
                 memberDatabase.add(member);
-                this.outputTextArea.appendText("Added Standard Member\n");
+                String outputString = String.format("Added %s %s - %s as a Premium member to the database.\n", member.getFname(), member.getLname(), dob);
+                this.outputTextArea.appendText(outputString);
             } else {
                 this.outputTextArea.appendText("Something has gone seriously wrong!\n");
             }
         }
+    }
+
+    @FXML
+    protected void removeMember() {
+
+        Member member;
+        String fName = lineParts[1];
+        String lName = lineParts[2];
+        Date dob = new Date(lineParts[3]);
+        member = new Member(fName, lName, dob, null, null);
+        Member memberToRemove = memberDatabase.getMember(memberDatabase.find(member));
+        if (memberToRemove == null) {
+            System.out.printf("%s %s is not in the database.\n", lineParts[1], lineParts[2]);
+            return;
+        } else if (memberDatabase.remove(memberToRemove)) {
+            System.out.printf("%s %s removed.\n", lineParts[1], lineParts[2]);
+            return;
+        }
+
+        System.out.printf("%s %s was unable to be removed.\n", lineParts[1], lineParts[2]);
     }
 }
