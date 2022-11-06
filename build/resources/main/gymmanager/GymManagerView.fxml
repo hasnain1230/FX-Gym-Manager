@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gymmanager.GymManagerController">
+    <center>
+        <TabPane prefHeight="300.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab text="Membership">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="500.0">
+                            <children>
+                                <GridPane layoutX="23.0" layoutY="17.0" prefHeight="301.0" prefWidth="455.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="176.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="334.0" minWidth="10.0" prefWidth="324.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label prefHeight="18.0" prefWidth="142.0" text="First Name" />
+                                        <TextField fx:id="firstNameTextField" prefHeight="26.0" prefWidth="304.0" GridPane.columnIndex="1" />
+                                        <Label text="Last Name" GridPane.rowIndex="1" />
+                                        <TextField fx:id="lastNameTextField" prefHeight="26.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label text="DOB" GridPane.rowIndex="2" />
+                                        <DatePicker fx:id="dobDatePicker" prefHeight="26.0" prefWidth="303.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label text="Location" GridPane.rowIndex="3" />
+                                        <TextField fx:id="locationTextField" prefHeight="26.0" prefWidth="298.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <Label text="Membership Type" GridPane.rowIndex="4" />
+                                        <HBox prefHeight="22.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                            <children>
+                                                <RadioButton fx:id="standardMembershipRadioButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="108.0" text="Standard   ">
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="membershipType" />
+                                                    </toggleGroup></RadioButton>
+                                                <RadioButton fx:id="familyMembershipRadioButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="87.0" text="Family   " toggleGroup="$membershipType" />
+                                                <RadioButton fx:id="premiumMembershipRadioButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="108.0" text="Premium" toggleGroup="$membershipType" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </GridPane>
+                                <Button fx:id="addButton" layoutX="185.0" layoutY="330.0" mnemonicParsing="false" onAction="#addMember" text="Add" />
+                                <Button fx:id="removeButton" alignment="CENTER_RIGHT" layoutX="260.0" layoutY="330.0" mnemonicParsing="false" text="Remove" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Fitness Class">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <GridPane layoutX="24.0" layoutY="16.0" prefHeight="268.0" prefWidth="450.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="10.0" prefWidth="154.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="296.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Class" />
+                                        <TextField prefHeight="26.0" prefWidth="293.0" GridPane.columnIndex="1" />
+                                        <Label text="Instructor" GridPane.rowIndex="1" />
+                                        <TextField prefHeight="26.0" prefWidth="296.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label text="Location" GridPane.rowIndex="2" />
+                                        <TextField prefHeight="26.0" prefWidth="296.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label text="First Name" GridPane.rowIndex="3" />
+                                        <TextField prefHeight="26.0" prefWidth="297.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <Label text="Last Name" GridPane.rowIndex="4" />
+                                        <TextField prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        <Label text="DOB" GridPane.rowIndex="5" />
+                                        <DatePicker prefHeight="26.0" prefWidth="294.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    </children>
+                                </GridPane>
+                                <Button layoutX="117.0" layoutY="301.0" mnemonicParsing="false" text="Check in Member" />
+                                <Button layoutX="125.0" layoutY="336.0" mnemonicParsing="false" text="Check in Guest" />
+                                <Button layoutX="270.0" layoutY="301.0" mnemonicParsing="false" text="Done Member" />
+                                <Button layoutX="278.0" layoutY="336.0" mnemonicParsing="false" text="Done Guest" />
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Information Hub">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="500.0">
+                            <children>
+                                <MenuBar prefHeight="30.0" prefWidth="500.0">
+                                    <menus>
+                                        <Menu id="information_hub_member_database" mnemonicParsing="false" text="Member Database">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="Print" />
+                                                <MenuItem mnemonicParsing="false" text="Print by County" />
+                                                <MenuItem mnemonicParsing="false" text="Print by Name" />
+                                                <MenuItem mnemonicParsing="false" text="Print by Expiration Date" />
+                                                <MenuItem mnemonicParsing="false" text="Load in Historical Members" />
+                                            </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="Class Schedule">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="Print" />
+                                                <MenuItem mnemonicParsing="false" text="Load in Class Schedule" />
+                                            </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="Membership Fee">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="Print First Bill" />
+                                                <MenuItem mnemonicParsing="false" text="Print Next Bill" />
+                                            </items>
+                                        </Menu>
+                                    </menus>
+                                </MenuBar>
+                                <GridPane layoutY="86.0" prefHeight="90.0" prefWidth="500.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                </GridPane>
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+    <bottom>
+        <TextArea fx:id="outputTextArea" editable="false" prefHeight="189.0" prefWidth="500.0" BorderPane.alignment="CENTER" />
+    </bottom>
+</BorderPane>
