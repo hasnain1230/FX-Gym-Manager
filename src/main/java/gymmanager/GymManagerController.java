@@ -247,6 +247,7 @@ public class GymManagerController implements Initializable {
 
         Member member = new Member(firstName, lastName, dob, null, null);
         Member memberToRemove = memberDatabase.getMember(memberDatabase.find(member));
+        this.clearMembershipArea();
         if (memberToRemove == null) {
             String outputText = String.format("Member %s %s - %s not found in database.\n", firstName, lastName, dob);
             this.outputTextArea.appendText(outputText);
@@ -258,8 +259,6 @@ public class GymManagerController implements Initializable {
         }
 
         outputTextArea.appendText(String.format("Something went seriously wrong when trying to remove %s %s - %s\n", firstName, lastName, dob));
-
-        this.clearMembershipArea();
     }
 
     /**
@@ -452,8 +451,21 @@ public class GymManagerController implements Initializable {
         return true;
     }
 
+    @FXML
+    protected void clearFitnessClassInputs() {
+        this.classChoiceBox.setValue(null);
+        this.instructorChoiceBox.setValue(null);
+        this.locationFitnessClassChoiceBox.setValue(null);
+        this.firstNameFitnessClassTextField.clear();
+        this.lastNameFitnessClassTextField.clear();
+        this.fitnessClassDobDatePicker.getEditor().clear();
+        this.fitnessClassDobDatePicker.setValue(null);
+    }
+
     /**
-     * Will check in a member into a fitness class if they are allowed into the fitness class.
+     * Will check in a member into a fitness class if they are allowed into the fitness class. We will check for invalid or missing inputs
+     * in the GUI and we will check for all possible reasons a member may not be allowed to check into the fitness class (like location errors or expired memberships). If they
+     * are allowed to check into the fitness class, we check them into the corresponding fitness class.
      */
     @FXML
     protected void checkInMember() {
@@ -470,6 +482,7 @@ public class GymManagerController implements Initializable {
 
             assert location != null;
             String[] dataArray = {null, className, instructorName, location.getTown(), firstName, lastName, dob.toString()};
+            this.clearFitnessClassInputs();
 
             if (!checkFitnessClassesWithCheckInClass(dataArray, memberToCheckIn, classSchedule)) {
                 return;
@@ -484,6 +497,11 @@ public class GymManagerController implements Initializable {
         }
     }
 
+    /**
+     * Will check in a guest into a fitness class if they are allowed into the fitness class. We will check for invalid or missing inputs
+     * in the GUI and we will check for all possible reasons the guest may not be allowed to check into the fitness class (like location errors or expired memberships or invalid guest passes). If they
+     * are allowed to check into the fitness class, we check them into the corresponding fitness class.
+     */
     @FXML
     protected void checkInGuest() {
         if (checkFitnessClassInputs()) {
@@ -498,6 +516,7 @@ public class GymManagerController implements Initializable {
             Member member = new Member(firstName, lastName, dob, null, location);
             member = memberDatabase.getMember(memberDatabase.find(member));
 
+            this.clearFitnessClassInputs();
 
             if (member instanceof Family) { // If member is a family instance, that means it may also be a Premium. Either way, they have guest permissions
                 FitnessClass fitnessClassToCheckInto;
@@ -532,6 +551,11 @@ public class GymManagerController implements Initializable {
 
     }
 
+    /**
+     * Will check out a member from a fitness class if they are already checked into a fitness class. We will check for invalid or missing inputs
+     * in the GUI and we will check for all possible reasons a member may not be allowed to check out of the class (like not already being checked into a fitness class). If they
+     * are allowed to check out the fitness class, we check them out of the corresponding fitness class.
+     */
     @FXML
     protected void checkOutMember() {
         if (checkFitnessClassInputs()) {
@@ -546,6 +570,8 @@ public class GymManagerController implements Initializable {
             assert location != null;
             String[] inputData = {null, className, instructorName, location.getTown(), firstName, lastName, dob.toString()};
             Member memberToRemove = memberDatabase.getMember(memberDatabase.find(new Member(inputData[4], inputData[5], new Date(inputData[6]), null, null)));
+
+            this.clearFitnessClassInputs();
 
             if (!checkGeneralInput(inputData, memberToRemove, classSchedule)) {
                 return;
@@ -570,6 +596,11 @@ public class GymManagerController implements Initializable {
         }
     }
 
+    /**
+     * Will check out a guest from a fitness class if they are already checked into a fitness class. We will check for invalid or missing inputs
+     * in the GUI and we will check for all possible reasons a guest may not be allowed to check out of the class (like not already being checked into a fitness class). If they
+     * are allowed to check out the fitness class, we check them out of the corresponding fitness class.
+     */
     @FXML
     protected void checkOutGuest() {
         if (checkFitnessClassInputs()) {
@@ -585,6 +616,8 @@ public class GymManagerController implements Initializable {
             member = memberDatabase.getMember(memberDatabase.find(member));
             assert location != null;
             String[] inputData = {null, className, instructorName, location.getTown(), firstName, lastName, dob.toString()};
+
+            this.clearFitnessClassInputs();
 
             if (!checkGeneralInput(inputData, member, classSchedule)) {
                 return;
@@ -667,40 +700,7 @@ public class GymManagerController implements Initializable {
      */
     @FXML
     protected void loadFitnessClasses() {
-        try {
-            File file = new File(Constants.CLASS_SCHEDULE_FROM_CONTENT_ROOT);
-            Scanner sc = new Scanner(file);
-            this.outputTextArea.appendText("-Fitness classes loaded-\n");
-
-            while (sc.hasNextLine()) {
-                String[] line = sc.nextLine().split("\\s+");
-
-                String className = line[0];
-
-                if (!this.classChoiceBox.getItems().contains(className)) {
-                    this.classChoiceBox.getItems().add(className);
-                }
-
-                String instructorName = line[1];
-
-                if (!this.instructorChoiceBox.getItems().contains(instructorName)) {
-                    this.instructorChoiceBox.getItems().add(instructorName);
-                }
-
-                Time time = Time.returnTimeEnumFromTimeOfDay(line[2]);
-                Location location = Location.returnEnumFromString(line[3]);
-
-                FitnessClass fitnessClass = new FitnessClass(time, className, instructorName, location);
-                this.outputTextArea.appendText(fitnessClass.toString());
-
-                classSchedule.addClass(fitnessClass);
-            }
-        } catch (FileNotFoundException fileNotFoundException) {
-            this.outputTextArea.appendText("File is not found!");
-            return;
-        }
-
-        this.outputTextArea.appendText("-end of list-\n");
+        this.outputTextArea.appendText(classSchedule.loadFitnessClasses(this.classChoiceBox, this.instructorChoiceBox));
     }
 
     /**

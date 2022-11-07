@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * This is a class using JUnit5 to test the getMembershipFee() method in the Premium class.
+ * This is a class using JUnit5 to tests the getMembershipFee() method in the Premium class.
  * @author Hasnain Ali, Carolette Saguil
  */
-class PremiumTest {
+public class PremiumTest {
 
     /**
      * Tests that premium membership fee is 659.89

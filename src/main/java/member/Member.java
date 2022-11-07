@@ -165,7 +165,7 @@ public class Member implements Comparable<Member> {
     }
 
     /**
-     * This testbed main in Member.java is to test all methods related Member, especially {@code Member.compareTo()}.
+     * This testbed main in Member.java is to tests all methods related Member, especially {@code Member.compareTo()}.
      * @param args Empty arguments; no arguments from the command line should be passed here.
      */
     public static void main(String[] args) {

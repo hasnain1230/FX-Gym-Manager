@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * This is a class using JUnit5 to test the isValid() method in the Date Class.
+ * This is a class using JUnit5 to tests the isValid() method in the Date Class.
  * @author Hasnain Ali, Carolette Saguil
  */
-class DateTest {
+public class DateTest {
 
     /**
      * Tests the requirement that the method shall not accept any date before 1900.

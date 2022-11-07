@@ -13,10 +13,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * This is a class using JUnit5 to test the adding and dropping of guest and regular members.
+ * This is a class using JUnit5 to tests the adding and dropping of guest and regular members.
  * @author Hasnain Ali, Carolette Saguil
  */
-class FitnessClassTest {
+public class FitnessClassTest {
 
     /**
      * Checks whether Drop guest works correctly.

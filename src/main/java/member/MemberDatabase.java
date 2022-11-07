@@ -241,24 +241,29 @@ public class MemberDatabase {
         return memberDatabase;
     }
 
+    /**
+     * @return A string with a list of all the historical members that we have added in already from the historical member list file.
+     * We will load all of these members into the member database and then return upon success and / or return an error message that will be
+     * displayed to the user.
+     */
     public String loadHistoricalMembers() {
-        String loadedMembers = null;
+        StringBuilder loadedMembers;
         try {
             File file = new File(Constants.MEMBER_LIST_FROM_CONTENT_ROOT);
             Scanner sc = new Scanner(file);
-            loadedMembers = ("-List of Members Loaded-\n");
+            loadedMembers = new StringBuilder(("-List of Members Loaded-\n"));
 
             while (sc.hasNextLine()) {
                 String[] line = sc.nextLine().split("\\s+");
                 Member member = new Member(line[0], line[1], new Date(line[2]), new Date(line[3]), Location.returnEnumFromString(line[4]));
-                add(member);
-                loadedMembers = loadedMembers + (member.toString()) + "\n";
+                this.add(member);
+                loadedMembers.append(member).append("\n");
             }
         } catch (FileNotFoundException fileNotFoundException) {
             return "File is not found";
         }
 
-        loadedMembers = loadedMembers + ("-end of list-\n");
-        return loadedMembers;
+        loadedMembers.append("-end of list-\n");
+        return loadedMembers.toString();
     }
 }

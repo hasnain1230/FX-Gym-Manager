@@ -1,6 +1,13 @@
 package fitness_classes;
 
 import constants.Constants;
+import enums.Location;
+import enums.Time;
+import javafx.scene.control.ChoiceBox;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /**
  * This class defines the class schedule using a single one dimensional array.
@@ -83,6 +90,53 @@ public class ClassSchedule {
         }
 
         this.classes = fitnessClasses;
+    }
+
+    /**
+     * @param classChoiceBox The class choice box for the GUI
+     * @param instructorChoiceBox The instructor choice box for the GUI
+     * @return A string with the output designated for output text area in the GUI.
+     * This method will also load in all fitness classes into the Class Schedule database.
+     */
+    public String loadFitnessClasses(ChoiceBox<String> classChoiceBox, ChoiceBox<String> instructorChoiceBox) {
+        StringBuilder outputTextArea = new StringBuilder();
+
+        try {
+            File file = new File(Constants.CLASS_SCHEDULE_FROM_CONTENT_ROOT);
+            Scanner sc = new Scanner(file);
+            outputTextArea.append("-Fitness classes loaded-\n");
+
+            while (sc.hasNextLine()) {
+                String[] line = sc.nextLine().split("\\s+");
+
+                String className = line[0];
+
+                if (!classChoiceBox.getItems().contains(className)) {
+                    classChoiceBox.getItems().add(className);
+                }
+
+                String instructorName = line[1];
+
+                if (!instructorChoiceBox.getItems().contains(instructorName)) {
+                    instructorChoiceBox.getItems().add(instructorName);
+                }
+
+                Time time = Time.returnTimeEnumFromTimeOfDay(line[2]);
+                Location location = Location.returnEnumFromString(line[3]);
+
+                FitnessClass fitnessClass = new FitnessClass(time, className, instructorName, location);
+                outputTextArea.append(fitnessClass.toString());
+
+                this.addClass(fitnessClass);
+            }
+        } catch (FileNotFoundException fileNotFoundException) {
+            outputTextArea.append("File is not found!\n");
+            return outputTextArea.toString();
+        }
+
+        outputTextArea.append("-end of list-\n");
+
+        return outputTextArea.toString();
     }
 
 }
