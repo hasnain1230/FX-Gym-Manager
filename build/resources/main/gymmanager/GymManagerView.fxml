@@ -31,7 +31,7 @@
                                         <Label text="DOB" GridPane.rowIndex="2" />
                                         <DatePicker fx:id="dobDatePicker" prefHeight="26.0" prefWidth="303.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                         <Label text="Location" GridPane.rowIndex="3" />
-                                        <TextField fx:id="locationTextField" prefHeight="26.0" prefWidth="298.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <ChoiceBox fx:id="locationChoiceBox" prefHeight="26.0" prefWidth="394.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <Label text="Membership Type" GridPane.rowIndex="4" />
                                         <HBox prefHeight="22.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <children>
@@ -70,23 +70,23 @@
                                     </rowConstraints>
                                     <children>
                                         <Label text="Class" />
-                                        <TextField prefHeight="26.0" prefWidth="293.0" GridPane.columnIndex="1" />
                                         <Label text="Instructor" GridPane.rowIndex="1" />
-                                        <TextField prefHeight="26.0" prefWidth="296.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                         <Label text="Location" GridPane.rowIndex="2" />
-                                        <TextField prefHeight="26.0" prefWidth="296.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                         <Label text="First Name" GridPane.rowIndex="3" />
-                                        <TextField prefHeight="26.0" prefWidth="297.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <TextField fx:id="firstNameFitnessClassTextField" prefHeight="26.0" prefWidth="297.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <Label text="Last Name" GridPane.rowIndex="4" />
-                                        <TextField prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        <TextField fx:id="lastNameFitnessClassTextField" prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                         <Label text="DOB" GridPane.rowIndex="5" />
-                                        <DatePicker prefHeight="26.0" prefWidth="294.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                        <DatePicker fx:id="fitnessClassDobDatePicker" prefHeight="26.0" prefWidth="294.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <ChoiceBox fx:id="locationFitnessClassChoiceBox" prefHeight="26.0" prefWidth="514.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ChoiceBox fx:id="classChoiceBox" prefHeight="26.0" prefWidth="316.0" GridPane.columnIndex="1" />
+                              <ChoiceBox fx:id="instructorChoiceBox" prefHeight="26.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
-                                <Button layoutX="117.0" layoutY="301.0" mnemonicParsing="false" text="Check in Member" />
-                                <Button layoutX="125.0" layoutY="336.0" mnemonicParsing="false" text="Check in Guest" />
-                                <Button layoutX="270.0" layoutY="301.0" mnemonicParsing="false" text="Done Member" />
-                                <Button layoutX="278.0" layoutY="336.0" mnemonicParsing="false" text="Done Guest" />
+                                <Button layoutX="117.0" layoutY="301.0" mnemonicParsing="false" onAction="#checkInMember" text="Check in Member" />
+                                <Button fx:id="checkInGuestButton" layoutX="125.0" layoutY="336.0" mnemonicParsing="false" onAction="#checkInGuest" text="Check in Guest" />
+                                <Button fx:id="doneMemberButton" layoutX="270.0" layoutY="301.0" mnemonicParsing="false" onAction="#checkOutMember" text="Done Member" />
+                                <Button fx:id="doneGuestButton" layoutX="278.0" layoutY="336.0" mnemonicParsing="false" onAction="#checkOutGuest" text="Done Guest" />
                             </children></AnchorPane>
                     </content>
                 </Tab>
@@ -94,27 +94,26 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="500.0">
                             <children>
-                                <MenuBar prefHeight="30.0" prefWidth="500.0">
+                                <MenuBar prefHeight="30.0" prefWidth="800.0">
                                     <menus>
                                         <Menu id="information_hub_member_database" mnemonicParsing="false" text="Member Database">
                                             <items>
-                                                <MenuItem mnemonicParsing="false" text="Print" />
-                                                <MenuItem mnemonicParsing="false" text="Print by County" />
-                                                <MenuItem mnemonicParsing="false" text="Print by Name" />
-                                                <MenuItem mnemonicParsing="false" text="Print by Expiration Date" />
-                                                <MenuItem mnemonicParsing="false" text="Load in Historical Members" />
+                                                <MenuItem fx:id="printButton" mnemonicParsing="false" onAction="#print" text="Print" />
+                                                <MenuItem fx:id="printByCountyButton" mnemonicParsing="false" onAction="#printByCounty" text="Print by County" />
+                                                <MenuItem fx:id="printByNameButton" mnemonicParsing="false" onAction="#printByName" text="Print by Name" />
+                                                <MenuItem fx:id="printByExpirationButton" mnemonicParsing="false" onAction="#printByExpiration" text="Print by Expiration Date" />
+                                                <MenuItem fx:id="loadHistoricalMembersButton" mnemonicParsing="false" onAction="#loadHistoricalMembers" text="Load in Historical Members" />
                                             </items>
                                         </Menu>
                                         <Menu mnemonicParsing="false" text="Class Schedule">
                                             <items>
-                                                <MenuItem mnemonicParsing="false" text="Print" />
-                                                <MenuItem mnemonicParsing="false" text="Load in Class Schedule" />
+                                                <MenuItem fx:id="printFitnessClassScheduleButton" mnemonicParsing="false" onAction="#printFitnessClassSchedule" text="Print" />
+                                                <MenuItem fx:id="loadFitnessClassesButton" mnemonicParsing="false" onAction="#loadFitnessClasses" text="Load in Class Schedule" />
                                             </items>
                                         </Menu>
                                         <Menu mnemonicParsing="false" text="Membership Fee">
                                             <items>
-                                                <MenuItem mnemonicParsing="false" text="Print First Bill" />
-                                                <MenuItem mnemonicParsing="false" text="Print Next Bill" />
+                                                <MenuItem fx:id="printWithMembershipFeeButton" mnemonicParsing="false" onAction="#printWithMembershipFee" text="Print Bill" />
                                             </items>
                                         </Menu>
                                     </menus>
