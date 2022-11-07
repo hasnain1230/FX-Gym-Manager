@@ -111,51 +111,51 @@ public class MemberDatabase {
     }
 
     /**
-     * Prints out all members in the member database with no sorting.
+     * @return Returns string of all the members in the database with no sorting.
      */
-    public void print() {
+    public String print() {
 
         if (this.size == 0) {
-            System.out.println("Member Database is empty!");
-            return;
+            return ("Member Database is empty!\n");
         }
 
-        System.out.println("-list of members-");
+        String memberDatabase = "-list of members-\n";
         for (int x = 0; x < this.size; x++) {
-            System.out.println(this.mlist[x]);
+            memberDatabase = memberDatabase + this.mlist[x] + "\n";
         }
-        System.out.println("-end of list-");
+        memberDatabase = memberDatabase + "-end of list-\n";
+        return memberDatabase;
+    }
+
+
+    /**
+     * @return Returns string of all the members in the database with their membership fee for the next billing term, with no sorting.
+     */
+    public String printWithMembershipFee() {
+
+        if (this.size == 0) {
+            return ("Member Database is empty!\n");
+        }
+
+        String memberDatabase = "-list of members with membership fees-\n";
+        for (int x = 0; x < this.size; x++) {
+            memberDatabase = memberDatabase + (this.mlist[x].toString(mlist[x].getMembershipFee())) + "\n";
+        }
+        memberDatabase = memberDatabase + "-end of list-\n";
+        return memberDatabase;
     }
 
     /**
-     * Prints out all the members in the database with their membership fee for the next billing term, with no sorting.
+     * @return Returns string of all the members in the member database, sorted by county then zipcode.
      */
-    public void printWithMembershipFee() {
-
+    public String printByCounty() {
         if (this.size == 0) {
-            System.out.println("Member Database is empty!");
-            return;
-        }
-
-        System.out.println("-list of members with membership fees-");
-        for (int x = 0; x < this.size; x++) {
-            System.out.println(this.mlist[x].toString(mlist[x].getMembershipFee()));
-        }
-        System.out.println("-end of list-");
-    }
-
-    /**
-     * Prints out all the members in the member database, sorted by county then zipcode.
-     */
-    public void printByCounty() {
-        if (this.size == 0) {
-            System.out.println("Member Database is empty!");
-            return;
+            return ("Member Database is empty!\n");
         }
 
         Member tempMember;
 
-        System.out.println("-list of members sorted by county and zipcode-");
+        String memberDatabase = "-list of members sorted by county and zipcode-\n";
         for (int x = 0; x < this.size; x++) {
             for (int y = x + 1; y < this.size; y++) {
                 if (this.mlist[x].getLocation().getCounty().compareTo(this.mlist[y].getLocation().getCounty()) > 0) {
@@ -171,23 +171,24 @@ public class MemberDatabase {
                 }
             }
 
-            System.out.println(this.mlist[x]);
+            memberDatabase = memberDatabase + this.mlist[x] + "\n";
         }
-        System.out.println("-end of list-");
+        memberDatabase = memberDatabase + "-end of list-\n";
+        return memberDatabase;
     }
 
+
     /**
-     * Prints out all the members in the member database, sorted by expiration date.
+     * @return Returns string of all the members in the member database, sorted by expiration date.
      */
-    public void printByExpirationDate() {
+    public String printByExpirationDate() {
         if (this.size == 0) {
-            System.out.println("Member Database is empty!");
-            return;
+            return ("Member Database is empty!\n");
         }
 
         Member tempMember;
 
-        System.out.println("-list of members sorted by member expiration date-");
+        String memberDatabase = "-list of members sorted by member expiration date-\n";
         for (int x = 0; x < this.size; x++) {
             for (int y = x + 1; y < this.size; y++) { // x = 09/29/2022 y
                 if (this.mlist[x].getExpire().compareTo(this.mlist[y].getExpire()) > 0) {
@@ -197,23 +198,23 @@ public class MemberDatabase {
                 }
             }
 
-            System.out.println(this.mlist[x]);
+            memberDatabase = memberDatabase + this.mlist[x] + "\n";
         }
-        System.out.println("-end of list-");
+        memberDatabase = memberDatabase + "-end of list-\n";
+        return memberDatabase;
     }
 
     /**
-     * Prints out all the members in the member database, sorted by last name then first name.
+     * @return Returns string of all the members in the member database, sorted by last name then first name.
      */
-    public void printByName() {
+    public String printByName() {
         if (this.size == 0) {
-            System.out.println("Member Database is empty!");
-            return;
+            return ("Member Database is empty!\n");
         }
 
         Member tempMember;
 
-        System.out.println("-list of members sorted by last name, and first name-");
+        String memberDatabase = "-list of members sorted by last name, and first name-\n";
         for (int x = 0; x < this.size; x++) {
             for (int y = x + 1; y < this.size; y++) {
                 if (this.mlist[x].getLname().compareTo(this.mlist[y].getLname()) > 0) {
@@ -229,8 +230,9 @@ public class MemberDatabase {
                 }
             }
 
-            System.out.println(this.mlist[x]);
+            memberDatabase = memberDatabase + this.mlist[x] + "\n";
         }
-        System.out.println("-end of list-");
+        memberDatabase = memberDatabase + "-end of list-\n";
+        return memberDatabase;
     }
 }

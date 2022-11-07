@@ -43,8 +43,10 @@ public class Constants {
     public static final double PREMIUM_MEMBERSHIP_PAYMENT_FREQUENCY = 11;
     public static final short PREMIUM_GUEST_PASS = 3;
 
-    public static final String CLASS_SCHEDULE_FROM_CONTENT_ROOT = "src/data/classSchedule.txt";
-    public static final String MEMBER_LIST_FROM_CONTENT_ROOT = "src/data/memberList.txt";
+    public static final String[] LOCATIONS = {"Somerville", "Piscataway", "Bridgewater", "Edison", "Franklin"};
+
+    public static final String CLASS_SCHEDULE_FROM_CONTENT_ROOT = "src/main/java/data/classSchedule.txt";
+    public static final String MEMBER_LIST_FROM_CONTENT_ROOT = "src/main/java/data/memberList.txt";
 
     public static final int MONTHS_SET_TO_EXPIRE = 3;
     public static final int YEAR_SET_TO_EXPIRE = 1;

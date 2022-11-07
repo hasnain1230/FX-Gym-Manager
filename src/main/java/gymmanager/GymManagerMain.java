@@ -8,14 +8,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * This class launches the Gym Manager GUI.
+ * @author Hasnain Ali, Carolette Saguil
+ */
 public class GymManagerMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GymManagerView.fxml"));
         Parent root = fxmlLoader.load();
-        GymManagerController gymManagerController = fxmlLoader.getController();
-        gymManagerController.initData();
-        Scene scene = new Scene(root, 500, 600);
+
+        Scene scene = new Scene(root, 800, 600);
 
         stage.setResizable(false);
         stage.setTitle("Gym Manager");
