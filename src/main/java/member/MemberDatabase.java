@@ -2,6 +2,11 @@ package member;
 
 import constants.Constants;
 import date.Date;
+import enums.Location;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /**
  * This class defines the Member Database using a single one dimensional array.
@@ -234,5 +239,26 @@ public class MemberDatabase {
         }
         memberDatabase = memberDatabase + "-end of list-\n";
         return memberDatabase;
+    }
+
+    public String loadHistoricalMembers() {
+        String loadedMembers = null;
+        try {
+            File file = new File(Constants.MEMBER_LIST_FROM_CONTENT_ROOT);
+            Scanner sc = new Scanner(file);
+            loadedMembers = ("-List of Members Loaded-\n");
+
+            while (sc.hasNextLine()) {
+                String[] line = sc.nextLine().split("\\s+");
+                Member member = new Member(line[0], line[1], new Date(line[2]), new Date(line[3]), Location.returnEnumFromString(line[4]));
+                add(member);
+                loadedMembers = loadedMembers + (member.toString()) + "\n";
+            }
+        } catch (FileNotFoundException fileNotFoundException) {
+            return "File is not found";
+        }
+
+        loadedMembers = loadedMembers + ("-end of list-\n");
+        return loadedMembers;
     }
 }

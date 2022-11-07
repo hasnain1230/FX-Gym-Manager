@@ -126,28 +126,38 @@ public class GymManagerController implements Initializable {
 
     /**
      * Checks if the inputs for add are filled in for the member tab.
-     * @return true if all the inputs are filled, false otherwise.
+     * @return true if all the inputs are filled, false otherwise. We check if the inputs are valid in the respective functions where it is called.
      */
     private boolean checkAddInputs() {
         if (this.firstNameTextField.getText().trim().isEmpty()) {
             this.outputTextArea.appendText("First Name Field Empty!\n");
+            this.clearMembershipArea();
             return false;
         } else if (this.lastNameTextField.getText().trim().isEmpty()) {
             this.outputTextArea.appendText("Last Name Field Empty\n");
+            this.clearMembershipArea();
             return false;
         } else if (this.dobDatePicker.getValue() == null) {
-            this.outputTextArea.appendText("Date Not Selected and/or date is invalid\n");
+            this.outputTextArea.appendText("Date Not Selected and / or Date is invalid\n");
+            this.clearMembershipArea();
             return false;
         } else if (this.locationChoiceBox.getValue() == null) {
             this.outputTextArea.appendText("Location Is Empty\n");
+            this.clearMembershipArea();
             return false;
         } else if (!(this.standardMembershipRadioButton.isSelected() || this.familyMembershipRadioButton.isSelected() || this.premiumMembershipRadioButton.isSelected())) {
             this.outputTextArea.appendText("Membership Not Selected\n");
+            this.clearMembershipArea();
             return false;
         }
 
         return true;
     }
+
+    /**
+     * This function maps to the "Clear Fields" button, but it serves as a helper function for the {@code addMember} and {@code removeMember} functions.
+     * This function will clear all fields in the membership tab.
+     */
     @FXML
     protected void clearMembershipArea() {
         this.firstNameTextField.clear();
@@ -165,7 +175,7 @@ public class GymManagerController implements Initializable {
      * Fails if: date of birth is invalid, date of birth is in the future, member is younger than 18 years old,
      * location is invalid, or if member is already in the database. The corresponding error message will be displayed
      * in the output text field. Otherwise, upon success, the member will be added to the database successfully and a corresponding message
-     * will be displayed in the output text area.
+     * will be displayed in the output text area. Additionally, any invalid dates entered will be rejected.
      */
     @FXML
     protected void addMember() {
@@ -213,8 +223,9 @@ public class GymManagerController implements Initializable {
 
     /**
      * Removes a member from the database.
-     * Fails if: firstName, lastName, and/or dob is empty and if member is not in database. A corresponding error message will be displayed
-     *
+     * Fails if: firstName, lastName, and / or DOB is empty and if member is not in database. A corresponding error message will be displayed.
+     * Additionally, if the dated entered into DOB picker is invalid, then a corresponding error message will be displayed. If a member is not found
+     * in the memberDataBase, then a corresponding error message will be printed in the output
      */
     @FXML
     protected void removeMember() {
@@ -225,7 +236,7 @@ public class GymManagerController implements Initializable {
             this.outputTextArea.appendText("Last Name Field Empty\n");
             return;
         } else if (this.dobDatePicker.getValue() == null) {
-            this.outputTextArea.appendText("Date Not Selected\n");
+            this.outputTextArea.appendText("Date Not Selected and / or the Date is Invalid\n");
             return;
         }
 
@@ -603,24 +614,7 @@ public class GymManagerController implements Initializable {
      */
     @FXML
     protected void loadHistoricalMembers() {
-        try {
-            File file = new File(Constants.MEMBER_LIST_FROM_CONTENT_ROOT);
-            Scanner sc = new Scanner(file);
-            this.outputTextArea.appendText("-List of Members Loaded-\n");
-
-            while (sc.hasNextLine()) {
-                String[] line = sc.nextLine().split("\\s+");
-                Member member = new Member(line[0], line[1], new Date(line[2]), new Date(line[3]), Location.returnEnumFromString(line[4]));
-                memberDatabase.add(member);
-                this.outputTextArea.appendText(member.toString());
-                this.outputTextArea.appendText("\n");
-            }
-        } catch (FileNotFoundException fileNotFoundException) {
-            this.outputTextArea.appendText("File is not found!");
-            return;
-        }
-
-        this.outputTextArea.appendText("-end of list-\n");
+        this.outputTextArea.appendText(memberDatabase.loadHistoricalMembers());
     }
 
     /**
