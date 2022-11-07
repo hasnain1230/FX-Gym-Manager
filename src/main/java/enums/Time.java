@@ -1,7 +1,7 @@
 package enums;
 
 /**
- * Time enum which defines morning (9:30), afternoon(14:00), and evening(18:30). Used for fitness class.
+ * Time enum which defines morning (9:30), afternoon (14:00), and evening (18:30). Used for fitness class.
  * @author Hasnain Ali, Carolette Saguil
  */
 public enum Time {

@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: gymmanager.GymManagerMain
+Class-Path: /Users/hasnain1230/Library/Java/JavaVirtualMachines/openjdk-
+ 19.0.1/Contents/Home
+
