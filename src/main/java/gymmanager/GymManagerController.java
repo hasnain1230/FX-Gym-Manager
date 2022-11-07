@@ -23,42 +23,99 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 /**
- * This class controls shit idk hasnain rewrite this.
+ * This is the controller class for the Gym Manager application. It will handle all ActionEvents, button clicks, and any other
+ * behavior that the user can interact with. This class will also handle the logic of the application. This class implements initializable
+ * in order to initialize the basic state of the application upon start.
  * @author Hasnain Ali, Carolette Saguil
  */
 public class GymManagerController implements Initializable {
+    /**
+     * The first name text field for the member tab.
+     */
     @FXML
     private TextField firstNameTextField;
+    /**
+     * The last name text field for the member tab.
+     */
     @FXML
     private TextField lastNameTextField;
+    /**
+     * The date of birthdate picker for the member tab.
+     */
     @FXML
     private DatePicker dobDatePicker;
+    /**
+     * The choice box for the member type for the member tab. This choice box will be initialized upon start when the initialize method is called.
+     */
     @FXML
     private ChoiceBox<String> locationChoiceBox;
 
+    /**
+     * The choice box for the member type for the fitness class tab. This choice box will be initialized upon start when the initialize method is called.
+     */
     @FXML
     private ChoiceBox<String> locationFitnessClassChoiceBox;
+    /**
+     * This is one of the radio buttons for the standard membership when adding a member.
+     */
     @FXML
     private RadioButton standardMembershipRadioButton;
+    /**
+     * This is one of the radio buttons for the family membership when adding a member.
+     */
     @FXML
     private RadioButton familyMembershipRadioButton;
+    /**
+     * This is one of the radio buttons for the premium membership when adding a member.
+     */
     @FXML
     private RadioButton premiumMembershipRadioButton;
+    /**
+     * This is the text area where all the program output will be displayed.
+     */
     @FXML
     private TextArea outputTextArea;
+    /**
+     * This is the choice box for selecting a class when adding a member to a class. It will not be selectable until the user loads a class schedule.
+     */
     @FXML
     private ChoiceBox<String> classChoiceBox;
+    /**
+     * This is the choice box for the instructor names when adding a member into a fitness class. No instructors will be displayed until the user loads in the fitness class file.
+     */
     @FXML
     private ChoiceBox<String> instructorChoiceBox;
+    /**
+     * The first name text field for the fitness class tab.
+     */
     @FXML
     private TextField firstNameFitnessClassTextField;
+    /**
+     * The last name text field for the fitness class tab.
+     */
     @FXML
     private TextField lastNameFitnessClassTextField;
+    /**
+     * The DatePicker for the date of birth for the fitness class DOB
+     */
     @FXML
     private DatePicker fitnessClassDobDatePicker;
+    /**
+     * This is the MemberDatabase that will be initialized once the controller has been loaded.
+     */
     private static MemberDatabase memberDatabase;
+    /**
+     * This is the class schedule that will be initialized once the controller has been loaded.
+     */
     private static ClassSchedule classSchedule;
 
+    /**
+     * @param arg0 The location used to resolve relative paths for the root object, or
+     *             {@code null} if the location is not known.
+     * @param arg1 The resources used to localize the root object, or {@code null} if
+     *             the root object was not localized.
+     * This is method will initialize the class schedule and the member database state for the Gym Manager GUI. It will be called automatically upon the start of the program.
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         this.locationChoiceBox.getItems().addAll(Constants.LOCATIONS);
@@ -68,7 +125,7 @@ public class GymManagerController implements Initializable {
     }
 
     /**
-     * Checks if the inputs for add are filled in.
+     * Checks if the inputs for add are filled in for the member tab.
      * @return true if all the inputs are filled, false otherwise.
      */
     private boolean checkAddInputs() {
@@ -79,7 +136,7 @@ public class GymManagerController implements Initializable {
             this.outputTextArea.appendText("Last Name Field Empty\n");
             return false;
         } else if (this.dobDatePicker.getValue() == null) {
-            this.outputTextArea.appendText("Date Not Selected\n");
+            this.outputTextArea.appendText("Date Not Selected and/or date is invalid\n");
             return false;
         } else if (this.locationChoiceBox.getValue() == null) {
             this.outputTextArea.appendText("Location Is Empty\n");
@@ -91,11 +148,24 @@ public class GymManagerController implements Initializable {
 
         return true;
     }
+    @FXML
+    protected void clearMembershipArea() {
+        this.firstNameTextField.clear();
+        this.lastNameTextField.clear();
+        this.dobDatePicker.getEditor().clear();
+        this.dobDatePicker.setValue(null);
+        this.standardMembershipRadioButton.setSelected(false);
+        this.familyMembershipRadioButton.setSelected(false);
+        this.premiumMembershipRadioButton.setSelected(false);
+        this.locationChoiceBox.setValue(null);
+    }
 
     /**
      * Adds member to the member database.
      * Fails if: date of birth is invalid, date of birth is in the future, member is younger than 18 years old,
-     * location is invalid, or if member is already in the database
+     * location is invalid, or if member is already in the database. The corresponding error message will be displayed
+     * in the output text field. Otherwise, upon success, the member will be added to the database successfully and a corresponding message
+     * will be displayed in the output text area.
      */
     @FXML
     protected void addMember() {
@@ -129,7 +199,6 @@ public class GymManagerController implements Initializable {
                 member = new Premium(firstName, lastName, dob, expire, location, Constants.PREMIUM_GUEST_PASS);
             }
 
-            assert member != null;
             if (memberDatabase.add(member)) {
                 String outputString = String.format("%s %s added.\n", member.getFname(), member.getLname());
                 this.outputTextArea.appendText(outputString);
@@ -137,12 +206,15 @@ public class GymManagerController implements Initializable {
                 String outputString = String.format("%s %s is already in the database.\n", member.getFname(), member.getLname());
                 this.outputTextArea.appendText(outputString);
             }
+
+            this.clearMembershipArea();
         }
     }
 
     /**
      * Removes a member from the database.
-     * Fails if: firstName, lastName, and/or dob is empty and if member is not in database
+     * Fails if: firstName, lastName, and/or dob is empty and if member is not in database. A corresponding error message will be displayed
+     *
      */
     @FXML
     protected void removeMember() {
@@ -174,6 +246,8 @@ public class GymManagerController implements Initializable {
         }
 
         outputTextArea.appendText(String.format("Something went seriously wrong when trying to remove %s %s - %s\n", firstName, lastName, dob));
+
+        this.clearMembershipArea();
     }
 
     private int returnClassIndex(ClassSchedule classSchedule, String className, String instructorName, Location location) {

@@ -46,7 +46,8 @@
                                     </children>
                                 </GridPane>
                                 <Button fx:id="addButton" layoutX="185.0" layoutY="330.0" mnemonicParsing="false" onAction="#addMember" text="Add" />
-                                <Button fx:id="removeButton" alignment="CENTER_RIGHT" layoutX="260.0" layoutY="330.0" mnemonicParsing="false" onAction="#removeMember" text="Remove" />
+                                <Button fx:id="removeButton" alignment="CENTER_RIGHT" layoutX="275.0" layoutY="330.0" mnemonicParsing="false" onAction="#removeMember" text="Remove" />
+                        <Button layoutX="390.0" layoutY="330.0" mnemonicParsing="false" onAction="#clearMembershipArea" text="Clear Fields" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -118,16 +119,6 @@
                                         </Menu>
                                     </menus>
                                 </MenuBar>
-                                <GridPane layoutY="86.0" prefHeight="90.0" prefWidth="500.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                </GridPane>
                             </children></AnchorPane>
                     </content>
                 </Tab>

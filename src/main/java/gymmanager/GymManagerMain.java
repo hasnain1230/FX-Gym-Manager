@@ -21,7 +21,8 @@ public class GymManagerMain extends Application {
      * @throws IOException
      * This is called by Application.launch() on start up. This method is responsible for
      * loading the fxml file and setting the scene. Upon successful loading of the fxml file, the controller will
-     * also have been set up and the controller {@code: initialize()} method will have been called.
+     * also have been set up and the controller {@code initialize()} method will have been called to set up the basic
+     * state of the application.
      */
     @Override
     public void start(Stage stage) throws IOException {
@@ -36,6 +37,10 @@ public class GymManagerMain extends Application {
         stage.show();
     }
 
+    /**
+     * @param args Command line arguments that will not be used here.
+     * This is the main method that calls Application.launch() to launch the application.
+     */
     public static void main(String[] args) {
         Application.launch();
     }
