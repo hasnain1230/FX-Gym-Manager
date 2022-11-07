@@ -14,11 +14,14 @@ import java.io.IOException;
  */
 public class GymManagerMain extends Application {
     /**
-     * @param stage the primary stage for this application, onto which
+     * @param stage The primary stage for this application, onto which
      *              the application scene can be set.
      *              Applications may create other stages, if needed, but they will not be
      *              primary stages.
      * @throws IOException
+     * This is called by Application.launch() on start up. This method is responsible for
+     * loading the fxml file and setting the scene. Upon successful loading of the fxml file, the controller will
+     * also have been set up and the controller {@code: initialize()} method will have been called.
      */
     @Override
     public void start(Stage stage) throws IOException {
@@ -34,6 +37,6 @@ public class GymManagerMain extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        Application.launch();
     }
 }
