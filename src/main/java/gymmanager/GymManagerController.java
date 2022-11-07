@@ -61,7 +61,7 @@ public class GymManagerController {
     }
 
     @FXML
-    protected void addMember(ActionEvent event) {
+    protected void addMember() {
         if (checkAddInputs()) {
             Member member;
             String firstName = this.firstNameTextField.getText().trim();
@@ -72,10 +72,10 @@ public class GymManagerController {
             if (location == null) {
                 outputTextArea.appendText("Invalid Location\n");
                 return;
-            } else if (dob.isValid()) {
+            } else if (!dob.isValid()) {
                 outputTextArea.appendText(String.format("DOB %s: invalid calendar date!\n", dob));
                 return;
-            } else if (dob.checkMemberAge()) {
+            } else if (!dob.checkMemberAge()) {
                 outputTextArea.appendText(String.format("DOB %s: must be 18 or older to join!\n", dob));
                 return;
             }
@@ -86,18 +86,55 @@ public class GymManagerController {
             if (this.standardMembershipRadioButton.isSelected()) {
                 member = new Member(firstName, lastName, dob, new Date(), location);
                 memberDatabase.add(member);
-                this.outputTextArea.appendText("Added Standard Member\n");
+                String outputString = String.format("Added %s %s - %s as a Standard member to the database.\n", member.getFname(), member.getLname(), dob);
+                this.outputTextArea.appendText(outputString);
             } else if (this.familyMembershipRadioButton.isSelected()) {
                 member = new Family(firstName, lastName, dob, new Date(), location, Constants.FAMILY_GUEST_PASSES);
                 memberDatabase.add(member);
-                this.outputTextArea.appendText("Added Standard Member\n");
+                String outputString = String.format("Added %s %s - %s as a Family member to the database.\n", member.getFname(), member.getLname(), dob);
+                this.outputTextArea.appendText(outputString);
             } else if (this.premiumMembershipRadioButton.isSelected()) {
                 member = new Premium(firstName, lastName, dob, new Date(), location, Constants.PREMIUM_GUEST_PASS);
                 memberDatabase.add(member);
-                this.outputTextArea.appendText("Added Standard Member\n");
+                String outputString = String.format("Added %s %s - %s as a Premium member to the database.\n", member.getFname(), member.getLname(), dob);
+                this.outputTextArea.appendText(outputString);
             } else {
                 this.outputTextArea.appendText("Something has gone seriously wrong!\n");
             }
         }
     }
+
+    @FXML
+    protected void removeMember() {
+        if (this.firstNameTextField.getText().trim().isEmpty()) {
+            this.outputTextArea.appendText("First Name Field Empty!\n");
+            return;
+        } else if (this.lastNameTextField.getText().trim().isEmpty()) {
+            this.outputTextArea.appendText("Last Name Field Empty\n");
+            return;
+        } else if (this.dobDatePicker.getValue() == null) {
+            this.outputTextArea.appendText("Date Not Selected\n");
+            return;
+        }
+
+        String firstName = this.firstNameTextField.getText().trim();
+        String lastName = this.lastNameTextField.getText().trim();
+        Date dob = new Date(this.dobDatePicker.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+
+        Member member = new Member(firstName, lastName, dob, null, null);
+        Member memberToRemove = memberDatabase.getMember(memberDatabase.find(member));
+        if (memberToRemove == null) {
+            String outputText = String.format("Member %s %s - %s not found in database.\n", firstName, lastName, dob);
+            this.outputTextArea.appendText(outputText);
+            return;
+        } else if (memberDatabase.remove(memberToRemove)) {
+            String outputText = String.format("Removed %s %s - %s from the database.\n", firstName, lastName, dob);
+            this.outputTextArea.appendText(outputText);
+            return;
+        }
+
+        outputTextArea.appendText(String.format("Something went seriously wrong when trying to remove %s %s - %s\n", firstName, lastName, dob));
+    }
+
+
 }

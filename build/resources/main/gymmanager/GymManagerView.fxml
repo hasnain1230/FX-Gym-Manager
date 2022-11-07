@@ -46,7 +46,7 @@
                                     </children>
                                 </GridPane>
                                 <Button fx:id="addButton" layoutX="185.0" layoutY="330.0" mnemonicParsing="false" onAction="#addMember" text="Add" />
-                                <Button fx:id="removeButton" alignment="CENTER_RIGHT" layoutX="260.0" layoutY="330.0" mnemonicParsing="false" text="Remove" />
+                                <Button fx:id="removeButton" alignment="CENTER_RIGHT" layoutX="260.0" layoutY="330.0" mnemonicParsing="false" onAction="#removeMember" text="Remove" />
                             </children>
                         </AnchorPane>
                     </content>
