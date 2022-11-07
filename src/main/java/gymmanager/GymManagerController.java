@@ -106,21 +106,35 @@ public class GymManagerController {
 
     @FXML
     protected void removeMember() {
-
-        Member member;
-        String fName = lineParts[1];
-        String lName = lineParts[2];
-        Date dob = new Date(lineParts[3]);
-        member = new Member(fName, lName, dob, null, null);
-        Member memberToRemove = memberDatabase.getMember(memberDatabase.find(member));
-        if (memberToRemove == null) {
-            System.out.printf("%s %s is not in the database.\n", lineParts[1], lineParts[2]);
+        if (this.firstNameTextField.getText().trim().isEmpty()) {
+            this.outputTextArea.appendText("First Name Field Empty!\n");
             return;
-        } else if (memberDatabase.remove(memberToRemove)) {
-            System.out.printf("%s %s removed.\n", lineParts[1], lineParts[2]);
+        } else if (this.lastNameTextField.getText().trim().isEmpty()) {
+            this.outputTextArea.appendText("Last Name Field Empty\n");
+            return;
+        } else if (this.dobDatePicker.getValue() == null) {
+            this.outputTextArea.appendText("Date Not Selected\n");
             return;
         }
 
-        System.out.printf("%s %s was unable to be removed.\n", lineParts[1], lineParts[2]);
+        String firstName = this.firstNameTextField.getText().trim();
+        String lastName = this.lastNameTextField.getText().trim();
+        Date dob = new Date(this.dobDatePicker.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+
+        Member member = new Member(firstName, lastName, dob, null, null);
+        Member memberToRemove = memberDatabase.getMember(memberDatabase.find(member));
+        if (memberToRemove == null) {
+            String outputText = String.format("Member %s %s - %s not found in database.\n", firstName, lastName, dob);
+            this.outputTextArea.appendText(outputText);
+            return;
+        } else if (memberDatabase.remove(memberToRemove)) {
+            String outputText = String.format("Removed %s %s - %s from the database.\n", firstName, lastName, dob);
+            this.outputTextArea.appendText(outputText);
+            return;
+        }
+
+        outputTextArea.appendText(String.format("Something went seriously wrong when trying to remove %s %s - %s\n", firstName, lastName, dob));
     }
+
+
 }
