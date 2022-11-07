@@ -225,7 +225,8 @@ public class GymManagerController implements Initializable {
      * Removes a member from the database.
      * Fails if: firstName, lastName, and / or DOB is empty and if member is not in database. A corresponding error message will be displayed.
      * Additionally, if the dated entered into DOB picker is invalid, then a corresponding error message will be displayed. If a member is not found
-     * in the memberDataBase, then a corresponding error message will be printed in the output
+     * in the memberDataBase, then a corresponding error message will be printed in the output. If a member is found in the member database, then
+     * they will be removed and a corresponding message will be printed to the user.
      */
     @FXML
     protected void removeMember() {
@@ -261,6 +262,13 @@ public class GymManagerController implements Initializable {
         this.clearMembershipArea();
     }
 
+    /**
+     * @param classSchedule The ClassSchedule Object that has all the class schedules.
+     * @param className The name of the class.
+     * @param instructorName The name of the instructor.
+     * @param location The name of the location.
+     * @return The index of the specified class in the class schedule.
+     */
     private int returnClassIndex(ClassSchedule classSchedule, String className, String instructorName, Location location) {
         FitnessClass[] fitnessClasses = classSchedule.getAllClasses();
         FitnessClass fitnessClass = new FitnessClass(null, className, instructorName, location);
@@ -296,6 +304,11 @@ public class GymManagerController implements Initializable {
         return null;
     }
 
+    /**
+     * @param className The name of the class
+     * @param classSchedule The ClassSchedule Object that has all the class schedules.
+     * @return Whether the class name is valid against the {@code classSchedule}.
+     */
     private boolean checkValidClassName(String className, ClassSchedule classSchedule) {
         FitnessClass[] fitnessClasses = classSchedule.getAllClasses();
         for (int x = 0; x < classSchedule.getNumClasses(); x++) {
@@ -307,6 +320,11 @@ public class GymManagerController implements Initializable {
         return false;
     }
 
+    /**
+     * @param instructorName The name of the instructor
+     * @param classSchedule The ClassSchedule Object that has all the class schedules.
+     * @return Whether the instructor is valid against the {@code classSchedule}.
+     */
     private boolean checkValidInstructor(String instructorName, ClassSchedule classSchedule) {
         FitnessClass[] fitnessClasses = classSchedule.getAllClasses();
         for (int x = 0; x < classSchedule.getNumClasses(); x++) {
@@ -318,11 +336,22 @@ public class GymManagerController implements Initializable {
         return false;
     }
 
+    /**
+     * @param location The fitness class location as a {@code String}
+     * @return Checks whether the {@code location} is valid.
+     */
     private boolean checkValidLocation(String location) {
         return Location.returnEnumFromString(location) != null;
     }
 
 
+    /**
+     * @param inputData The data passed in the fitness class tab when the client is interacting with fitness class database.
+     * @param member The member that we want to check for.
+     * @param classSchedule The ClassSchedule Object that has all the class schedules.
+     * @return Whether the input from the fitness class tab in the GUI is valid and whether this user / gust is able to be added / removed
+     * from the fitness class database.
+     */
     public boolean checkGeneralInput(String[] inputData, Member member, ClassSchedule classSchedule) {
         FitnessClass[] fitnessClasses = classSchedule.getAllClasses();
 
@@ -356,6 +385,13 @@ public class GymManagerController implements Initializable {
         return true;
     }
 
+    /**
+     * @param inputData The data passed in the fitness class tab when the client is interacting with fitness class database.
+     * @param memberToCheckIn The member we want to check in.
+     * @param classSchedule The ClassSchedule Object that has all the class schedules.
+     * @return Checks whether the entered fitness class corresponds to a fitness class in the database and whether the member / guest is able to
+     * actually check in. This function checks and calls all related helper functions to check if a member is able to be added into the member database.
+     */
     private boolean checkFitnessClassesWithCheckInClass(String[] inputData, Member memberToCheckIn, ClassSchedule classSchedule) {
         FitnessClass[] fitnessClasses = classSchedule.getAllClasses();
 
@@ -383,6 +419,10 @@ public class GymManagerController implements Initializable {
         return true;
     }
 
+    /**
+     * @return Checks whether the information added in the fitness class tab is valid. Checks all inputs by the clients and will throw
+     * according error / success messages based on their inputs.
+     */
     private boolean checkFitnessClassInputs() {
         if (classSchedule.getNumClasses() == 0) {
             this.outputTextArea.appendText("No classes have been added yet. Please go to the information hub to load all fitness classes\n");
@@ -412,6 +452,9 @@ public class GymManagerController implements Initializable {
         return true;
     }
 
+    /**
+     * Will check in a member into a fitness class if they are allowed into the fitness class.
+     */
     @FXML
     protected void checkInMember() {
         if (checkFitnessClassInputs()) {
@@ -454,6 +497,7 @@ public class GymManagerController implements Initializable {
 
             Member member = new Member(firstName, lastName, dob, null, location);
             member = memberDatabase.getMember(memberDatabase.find(member));
+
 
             if (member instanceof Family) { // If member is a family instance, that means it may also be a Premium. Either way, they have guest permissions
                 FitnessClass fitnessClassToCheckInto;

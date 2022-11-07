@@ -29,7 +29,7 @@
                                         <Label text="Last Name" GridPane.rowIndex="1" />
                                         <TextField fx:id="lastNameTextField" prefHeight="26.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                         <Label text="DOB" GridPane.rowIndex="2" />
-                                        <DatePicker fx:id="dobDatePicker" prefHeight="26.0" prefWidth="303.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <DatePicker fx:id="dobDatePicker" editable="false" prefHeight="26.0" prefWidth="303.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                         <Label text="Location" GridPane.rowIndex="3" />
                                         <ChoiceBox fx:id="locationChoiceBox" prefHeight="26.0" prefWidth="394.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <Label text="Membership Type" GridPane.rowIndex="4" />
@@ -78,16 +78,17 @@
                                         <Label text="Last Name" GridPane.rowIndex="4" />
                                         <TextField fx:id="lastNameFitnessClassTextField" prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                         <Label text="DOB" GridPane.rowIndex="5" />
-                                        <DatePicker fx:id="fitnessClassDobDatePicker" prefHeight="26.0" prefWidth="294.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                        <DatePicker fx:id="fitnessClassDobDatePicker" editable="false" prefHeight="26.0" prefWidth="294.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <ChoiceBox fx:id="locationFitnessClassChoiceBox" prefHeight="26.0" prefWidth="514.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <ChoiceBox fx:id="classChoiceBox" prefHeight="26.0" prefWidth="316.0" GridPane.columnIndex="1" />
                               <ChoiceBox fx:id="instructorChoiceBox" prefHeight="26.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
-                                <Button layoutX="117.0" layoutY="301.0" mnemonicParsing="false" onAction="#checkInMember" text="Check in Member" />
-                                <Button fx:id="checkInGuestButton" layoutX="125.0" layoutY="336.0" mnemonicParsing="false" onAction="#checkInGuest" text="Check in Guest" />
+                                <Button layoutX="117.0" layoutY="301.0" mnemonicParsing="false" onAction="#checkInMember" prefHeight="26.0" prefWidth="125.0" text="Check in Member" />
+                                <Button fx:id="checkInGuestButton" layoutX="117.0" layoutY="336.0" mnemonicParsing="false" onAction="#checkInGuest" prefHeight="26.0" prefWidth="125.0" text="Check in Guest" />
                                 <Button fx:id="doneMemberButton" layoutX="270.0" layoutY="301.0" mnemonicParsing="false" onAction="#checkOutMember" text="Done Member" />
-                                <Button fx:id="doneGuestButton" layoutX="278.0" layoutY="336.0" mnemonicParsing="false" onAction="#checkOutGuest" text="Done Guest" />
+                                <Button fx:id="doneGuestButton" layoutX="270.0" layoutY="336.0" mnemonicParsing="false" onAction="#checkOutGuest" prefHeight="26.0" prefWidth="107.0" text="Done Guest" />
+                        <Button layoutX="385.0" layoutY="301.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="98.0" text="Clear Fields" />
                             </children></AnchorPane>
                     </content>
                 </Tab>
