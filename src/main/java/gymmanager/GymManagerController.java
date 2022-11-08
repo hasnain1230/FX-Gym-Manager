@@ -14,13 +14,10 @@ import member.Member;
 import member.MemberDatabase;
 import member.Premium;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 /**
  * This is the controller class for the Gym Manager application. It will handle all ActionEvents, button clicks, and any other
