@@ -31,7 +31,9 @@ public class GymManagerMain extends Application {
 
         Scene scene = new Scene(root, 800, 600);
 
-        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.alwaysOnTopProperty();
+        stage.setAlwaysOnTop(true);
         stage.setTitle("Gym Manager");
         stage.setScene(scene);
         stage.show();

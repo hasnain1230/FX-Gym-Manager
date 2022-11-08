@@ -355,7 +355,7 @@ public class GymManagerController implements Initializable {
         FitnessClass[] fitnessClasses = classSchedule.getAllClasses();
 
         if (!checkValidClassName(inputData[1], classSchedule)) {
-            this.outputTextArea.appendText(String.format("%s - class does not exist.\n", inputData[1]));
+            this.outputTextArea.appendText(String.format("%s — class does not exist.\n", inputData[1]));
             return false;
         } else if (!checkValidInstructor(inputData[2], classSchedule)) {
             this.outputTextArea.appendText(String.format("%s — instructor does not exist.\n", inputData[2]));
@@ -482,12 +482,10 @@ public class GymManagerController implements Initializable {
 
             assert location != null;
             String[] dataArray = {null, className, instructorName, location.getTown(), firstName, lastName, dob.toString()};
-            this.clearFitnessClassInputs();
 
             if (!checkFitnessClassesWithCheckInClass(dataArray, memberToCheckIn, classSchedule)) {
                 return;
             }
-
 
             int classIndex = returnClassIndex(classSchedule, dataArray[1], dataArray[2], Location.returnEnumFromString(dataArray[3]));
 
@@ -515,8 +513,6 @@ public class GymManagerController implements Initializable {
 
             Member member = new Member(firstName, lastName, dob, null, location);
             member = memberDatabase.getMember(memberDatabase.find(member));
-
-            this.clearFitnessClassInputs();
 
             if (member instanceof Family) { // If member is a family instance, that means it may also be a Premium. Either way, they have guest permissions
                 FitnessClass fitnessClassToCheckInto;
@@ -571,8 +567,6 @@ public class GymManagerController implements Initializable {
             String[] inputData = {null, className, instructorName, location.getTown(), firstName, lastName, dob.toString()};
             Member memberToRemove = memberDatabase.getMember(memberDatabase.find(new Member(inputData[4], inputData[5], new Date(inputData[6]), null, null)));
 
-            this.clearFitnessClassInputs();
-
             if (!checkGeneralInput(inputData, memberToRemove, classSchedule)) {
                 return;
             }
@@ -616,8 +610,6 @@ public class GymManagerController implements Initializable {
             member = memberDatabase.getMember(memberDatabase.find(member));
             assert location != null;
             String[] inputData = {null, className, instructorName, location.getTown(), firstName, lastName, dob.toString()};
-
-            this.clearFitnessClassInputs();
 
             if (!checkGeneralInput(inputData, member, classSchedule)) {
                 return;

@@ -86,9 +86,9 @@
                                 </GridPane>
                                 <Button layoutX="117.0" layoutY="301.0" mnemonicParsing="false" onAction="#checkInMember" prefHeight="26.0" prefWidth="125.0" text="Check in Member" />
                                 <Button fx:id="checkInGuestButton" layoutX="117.0" layoutY="336.0" mnemonicParsing="false" onAction="#checkInGuest" prefHeight="26.0" prefWidth="125.0" text="Check in Guest" />
-                                <Button fx:id="doneMemberButton" layoutX="270.0" layoutY="301.0" mnemonicParsing="false" onAction="#checkOutMember" text="Done Member" />
-                                <Button fx:id="doneGuestButton" layoutX="270.0" layoutY="336.0" mnemonicParsing="false" onAction="#checkOutGuest" prefHeight="26.0" prefWidth="107.0" text="Done Guest" />
-                        <Button layoutX="385.0" layoutY="301.0" mnemonicParsing="false" onAction="#clearFitnessClassInputs" prefHeight="61.0" prefWidth="98.0" text="Clear Fields" />
+                                <Button fx:id="doneMemberButton" layoutX="255.0" layoutY="301.0" mnemonicParsing="false" onAction="#checkOutMember" text="Done Member" />
+                                <Button fx:id="doneGuestButton" layoutX="255.0" layoutY="336.0" mnemonicParsing="false" onAction="#checkOutGuest" prefHeight="26.0" prefWidth="107.0" text="Done Guest" />
+                        <Button layoutX="376.0" layoutY="301.0" mnemonicParsing="false" onAction="#clearFitnessClassInputs" prefHeight="61.0" prefWidth="98.0" text="Clear Fields" />
                             </children></AnchorPane>
                     </content>
                 </Tab>
